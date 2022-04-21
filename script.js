@@ -1,15 +1,15 @@
 import storage from "./storage.js";
 
-fetch("https://jsonplaceholder.typicode.com/posts/1")
-  .then((response) => response.json())
-  .then((data) => {
-    if (storage.get("data" !== null)) {
-      console.log(data);
-    } else {
-      storage.set("data", data);
-    }
-  })
-  .catch((error) => console.error(error));
+const userData = storage.get("data");
+
+if (userData !== null) {
+  console.log(userData);
+} else {
+  fetch("https://jsonplaceholder.typicode.com/posts/1")
+    .then((response) => response.json())
+    .then((data) => storage.set("data", data))
+    .catch((error) => console.error(error));
+}
 
 function isValidDateFormat(str) {
   let regexp = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/;
